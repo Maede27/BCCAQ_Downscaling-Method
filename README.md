@@ -3,8 +3,9 @@
 Install PuTTY to connect to the Compute Canada (Graham Server)
 Copy graham.computecanada.ca to Host Name or IP address in PuTTY, then select SSH and open 
 After connecting to CC server, navigate to home/mehdisam
-To install the R packages, you need to load "netcdf" module in addition to gcc and R: 
-module load gcc r netcdf
+To install the R packages, you need to load "netcdf" module in addition to gcc and R:
+
+module load gcc r netcdf udunits
 
 Some R packages like "pbdNCDF4" are removed from the official mirrors and you need to download the sources files first:
 wget https://cran.r-project.org/src/contrib/Archive/pbdNCDF4/pbdNCDF4_0.1-4.tar.gz
@@ -15,5 +16,22 @@ R
 In R environment:
 > install.packages("ncdf4")
 > install.packages("/home/mehdisam/pbdNCDF4_0.1-4.tar.gz", repos = NULL, type="source")
+> library(ClimDown)
+> library(ncdf4) 
+#### read GCM file
+> merge_new<-"pr_tasmax_tasmin.nc"
+> mergedfile<-nc_open(merge_new)
+#### read observation file
+> fn_obs<-"/home/najafim/scratch/lake_winnipeg/Livneh_2015/livneh-red_assiniboine.nc"
+> obs<-nc_open(fn_obs, write=TRUE)
+#### rename variables in observation data via R as the variables have different names in observ and GCM files
+> old_varname <-'Prec' #precipitation variable
+> new_varname <-'pr'
+> obs<- ncvar_rename(obs, old_varname, new_varname, verbose=FALSE)
+#### rename variables in observation data via cdo module in server
+####to load cdo module on Compute Canada:
+module load intel/2018.3 openmpi/3.1.2 cdo/1.9.5 nco/4.6.6 
+cdo chname,Prec,pr /home/najafim/scratch/lake_winnipeg/Livneh_2015/livneh-red_assiniboine.nc livneh-red_assiniboine_new.nc
+
 
 
