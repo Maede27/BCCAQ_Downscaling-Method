@@ -15,7 +15,7 @@ R
 
 In R environment:
 > install.packages("ncdf4")
-> install.packages("/home/mehdisam/pbdNCDF4_0.1-4.tar.gz", repos = NULL, type="source")
+> #install.packages("/home/mehdisam/pbdNCDF4_0.1-4.tar.gz", repos = NULL, type="source") ## we don't need this package for downscaling
 > library(ClimDown)
 > library(ncdf4) 
 #### read GCM file
@@ -31,7 +31,18 @@ In R environment:
 #### rename variables in observation data via cdo module in server
 ####to load cdo module on Compute Canada:
 module load intel/2018.3 openmpi/3.1.2 cdo/1.9.5 nco/4.6.6 
-cdo chname,Prec,pr /home/najafim/scratch/lake_winnipeg/Livneh_2015/livneh-red_assiniboine.nc livneh-red_assiniboine_new.nc
+cdo chname,Prec,pr /home/najafim/scratch/lake_winnipeg/Livneh_2015/livneh-red_assiniboine.nc  livneh-red_assiniboine_1.nc
+cdo chname,Tmax,tasmax /home/najafim/scratch/lake_winnipeg/Livneh_2015/livneh-red_assiniboine_1.nc  livneh-red_assiniboine_2.nc
+cdo chname,Tmin,tasmin /home/najafim/scratch/lake_winnipeg/Livneh_2015/livneh-red_assiniboine_2.nc  livneh-red_assiniboine_renamed.nc
+
+#### modify the variables' units in observation data (change C to celsius and mm to kg m-2 d-1)
+cdo chunit,C,celsius livneh-red_assiniboine_renamed.nc  livneh-red_assiniboine_renamed_celsius.nc
+cdo setattribute,pr@units="kg m-2 d-1" livneh-red_assiniboine_renamed_celsius.nc  livneh-red_assiniboine_renamed_modifiedUnits.nc
+
+### BCCAQ in R 
+
+
+
 
 
 
