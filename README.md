@@ -40,7 +40,11 @@ cdo chunit,C,celsius livneh-red_assiniboine_renamed.nc  livneh-red_assiniboine_r
 cdo setattribute,pr@units="kg m-2 d-1" livneh-red_assiniboine_renamed_celsius.nc  livneh-red_assiniboine_renamed_modifiedUnits.nc
 
 ### BCCAQ in R 
-
+> library(ncdf4)
+> library(ClimDown)
+> gcmFile<-"pr_tasmax_tasmin.nc"
+> ObsFile<-"livneh-red_assiniboine_renamed_modifiedUnits.nc"
+> bccaq.netcdf.wrapper(gcmFile, ObsFile, nc_out, varname = "tasmax")
 
 
 
