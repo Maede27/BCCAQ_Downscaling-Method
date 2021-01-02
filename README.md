@@ -49,4 +49,4 @@ cdo setattribute,pr@units="kg m-2 d-1" livneh-red_assiniboine_renamed_celsius.nc
 
 
 
-
+https://code.mpimet.mpg.de/projects/cdo/wiki/Tutorial
