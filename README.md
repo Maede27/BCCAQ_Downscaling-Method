@@ -51,3 +51,7 @@ cdo setattribute,pr@units="kg m-2 d-1" livneh-red_assiniboine_renamed_celsius.nc
 ### Useful links:
 https://code.mpimet.mpg.de/projects/cdo/wiki/Tutorial
 https://www.unidata.ucar.edu/software/netcdf/workshops/2011/utilities/NcdumpExamples.html
+
+
+### how to rotate lon from -180 to 180 to 0 to 360
+https://sourceforge.net/p/nco/discussion/9830/thread/c527a930/?limit=25
