@@ -53,10 +53,13 @@ https://code.mpimet.mpg.de/projects/cdo/wiki/Tutorial
 https://www.unidata.ucar.edu/software/netcdf/workshops/2011/utilities/NcdumpExamples.html
 
 
-### how to rotate lon from -180 to 180 to 0 to 360
+### useful link to rotate lon from -180 to 180 to 0 to 360
 https://sourceforge.net/p/nco/discussion/9830/thread/c527a930/?limit=25
 
 #### nco command to rotate longitude in observation data from -180~180 to 0~360
+###### first rotate the module
+module load intel/2018.3 openmpi/3.1.2 cdo/1.9.5 nco/4.6.6
+
 ncap2 -O -s 'where(lon<0) lon=lon+360; where(lon<0) lon=lon+360' livneh-red_assiniboine_renamed_modifiedUnits_lon.nc obs_lon_nco.nc
 
 #### to making the file readable, writable and executable in the server for everyone 
