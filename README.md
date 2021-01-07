@@ -58,3 +58,7 @@ https://sourceforge.net/p/nco/discussion/9830/thread/c527a930/?limit=25
 
 #### nco command to rotate longitude in observation data from -180~180 to 0~360
 ncap2 -O -s 'where(lon<0) lon=lon+360; where(lon<0) lon=lon+360' livneh-red_assiniboine_renamed_modifiedUnits_lon.nc obs_lon_nco.nc
+
+#### to making the file readable, writable and executable in the server for everyone 
+chmod 777 filename
+
