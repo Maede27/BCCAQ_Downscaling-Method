@@ -28,7 +28,7 @@ In R environment:
 > old_varname <-'Prec' #precipitation variable
 > new_varname <-'pr'
 > obs<- ncvar_rename(obs, old_varname, new_varname, verbose=FALSE)
-#### rename variables in observation data via cdo module in server
+#### or rename variables in observation data via cdo module in server (latter is better than former for renaming!)
 ####to load cdo module on Compute Canada:
 module load intel/2018.3 openmpi/3.1.2 cdo/1.9.5 nco/4.6.6 
 cdo chname,Prec,pr /home/najafim/scratch/lake_winnipeg/Livneh_2015/livneh-red_assiniboine.nc  livneh-red_assiniboine_1.nc
@@ -42,10 +42,10 @@ cdo setattribute,pr@units="kg m-2 d-1" livneh-red_assiniboine_renamed_celsius.nc
 ### BCCAQ in R 
 > library(ncdf4)
 > library(ClimDown)
-> gcmFile<-"pr_tasmax_tasmin.nc"
-> ObsFile<-"livneh-red_assiniboine_renamed_modifiedUnits.nc"
-> bccaq.netcdf.wrapper(gcmFile, ObsFile, nc_out, varname = "tasmax")
-
+> GCM<-"/home/najafim/scratch/lake_winnipeg/GCMs/CanESM5_raw_to_clip/step3-cdo_sellonlat-file/pr_tasmax_tasmin_Amon_CanESM5_h_ssp245_r1i1p1f1_1850-2100_clipped.nc"
+> Obs<-"/home/najafim/scratch/lake_winnipeg/GCMs/Test_Obs_GCM/Test_Obs_newLon_sameVar_sameUnit.nc"
+># repeat for each variable:
+> bccaq.netcdf.wrapper(GCM, Obs, nc_out, varname = "tasmax")  ##nc_out should exist (create a nc file) in the current directory on the server
 
 
 ### Useful links:
@@ -64,4 +64,8 @@ ncap2 -O -s 'where(lon<0) lon=lon+360; where(lon<0) lon=lon+360' livneh-red_assi
 
 #### to making the file readable, writable and executable in the server for everyone 
 chmod 777 filename
+
+####to be able to load both r and cdo modules at the same time on the server:
+module load cdo/1.7.2  r/3.5.0
+
 
