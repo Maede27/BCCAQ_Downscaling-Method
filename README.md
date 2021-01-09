@@ -44,7 +44,7 @@ cdo setattribute,pr@units="kg m-2 d-1" livneh-red_assiniboine_renamed_celsius.nc
 > library(ClimDown)
 > GCM<-"/home/najafim/scratch/lake_winnipeg/GCMs/CanESM5_raw_to_clip/step3-cdo_sellonlat-file/pr_tasmax_tasmin_Amon_CanESM5_h_ssp245_r1i1p1f1_1850-2100_clipped.nc"
 > Obs<-"/home/najafim/scratch/lake_winnipeg/GCMs/Test_Obs_GCM/Test_Obs_newLon_sameVar_sameUnit.nc"
-># repeat for each variable:
+>#### repeat for each variable:
 > bccaq.netcdf.wrapper(GCM, Obs, nc_out, varname = "tasmax")  ##nc_out should exist (create a nc file) in the current directory on the server
 
 
