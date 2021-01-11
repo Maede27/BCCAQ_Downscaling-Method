@@ -69,3 +69,14 @@ chmod 777 filename
 module load cdo/1.7.2  r/3.5.0
 
 
+
+library(ncdf4)
+library(ClimDown)
+GCM<-"/home/najafim/scratch/lake_winnipeg/GCMs/CanESM5_raw_to_clip/step3-cdo_se$
+Obs<-"./Test_Obs_newLon_sameVar_sameUnit.nc"
+
+bccaq.netcdf.wrapper(GCM, Obs, pr_CanESM5_downscaled.nc, varname = "pr")
+bccaq.netcdf.wrapper(GCM, Obs, tasmax_CanESM5_downscaled.nc, varname = "tasmax")
+bccaq.netcdf.wrapper(GCM, Obs, tasmin_CanESM5_downscaled.nc, varname = "tasmin")
+
+
