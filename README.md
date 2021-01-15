@@ -80,3 +80,17 @@ bccaq.netcdf.wrapper(GCM, Obs, tasmax_CanESM5_downscaled.nc, varname = "tasmax")
 bccaq.netcdf.wrapper(GCM, Obs, tasmin_CanESM5_downscaled.nc, varname = "tasmin")
 
 
+#### To submit a job on Graham
+check the version of modules on the directory by :
+[name@server ~]$ module list
+Load the modules R, gcc and netcdf with the required version:
+[name@server ~]$ module load gcc/5.4.0  r/3.5.2  netcdf/4.4.1.1
+install R packages with these commands: 
+[name@server ~]$ mkdir -p $HOME/R_libs
+[name@server ~]$ export R_LIBS=$HOME/R_libs
+[name@server ~]$ R -e 'install.packages("ncdf4", repos="https://cloud.r-project.org/")'
+[name@server ~]$ R -e 'install.packages("ClimDown", repos="https://cloud.r-project.org/")'
+
+Then install ClimDown and ncdf4 packages on R in the directory to make sure they are installed!
+
+
