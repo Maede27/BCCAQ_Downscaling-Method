@@ -45,7 +45,7 @@ cdo setattribute,pr@units="kg m-2 d-1" livneh-red_assiniboine_renamed_celsius.nc
 > GCM<-"/home/najafim/scratch/lake_winnipeg/GCMs/CanESM5_raw_to_clip/step3-cdo_sellonlat-file/pr_tasmax_tasmin_Amon_CanESM5_h_ssp245_r1i1p1f1_1850-2100_clipped.nc"
 > Obs<-"/home/najafim/scratch/lake_winnipeg/GCMs/Test_Obs_GCM/Test_Obs_newLon_sameVar_sameUnit.nc"
 >#### repeat for each variable:
-> bccaq.netcdf.wrapper(GCM, Obs, "nc_out.nc", varname = "tasmax") #creates the file nc_out.nc where the downscaled data will be stored on the server
+> bccaq.netcdf.wrapper(GCM, Obs, "nc_out_tasmax.nc", varname = "tasmax") #creates the file nc_out_tasmax.nc where the downscaled data will be stored on the server
 
 
 ### Useful links:
@@ -57,47 +57,40 @@ https://www.unidata.ucar.edu/software/netcdf/workshops/2011/utilities/NcdumpExam
 https://sourceforge.net/p/nco/discussion/9830/thread/c527a930/?limit=25
 
 #### nco command to rotate longitude in observation data from -180~180 to 0~360
-#### first rotate the module nco:
+#### first load the module nco:
 module load intel/2018.3 openmpi/3.1.2 cdo/1.9.5 nco/4.6.6
 
 ncap2 -O -s 'where(lon<0) lon=lon+360; where(lon<0) lon=lon+360' livneh-red_assiniboine_renamed_modifiedUnits_lon.nc obs_lon_nco.nc
 
-#### to making the file readable, writable and executable in the server for everyone 
+#### to make the file readable, writable and executable in the server for everyone 
 chmod 777 filename
 
 ####to be able to load both r and cdo modules at the same time on the server:
 module load cdo/1.7.2  r/3.5.0
 
 
-
-library(ncdf4)
-library(ClimDown)
-GCM<-"/home/najafim/scratch/lake_winnipeg/GCMs/CanESM5_raw_to_clip/step3-cdo_se$
-Obs<-"./Test_Obs_newLon_sameVar_sameUnit.nc"
-
-bccaq.netcdf.wrapper(GCM, Obs, pr_CanESM5_downscaled.nc, varname = "pr")
-bccaq.netcdf.wrapper(GCM, Obs, tasmax_CanESM5_downscaled.nc, varname = "tasmax")
-bccaq.netcdf.wrapper(GCM, Obs, tasmin_CanESM5_downscaled.nc, varname = "tasmin")
-
-
 #### To submit a job on Graham
-check the version of modules on the directory by :
+#check the version of modules on the directory by :
 [name@server ~]$ module list
-Load the modules R, gcc and netcdf with the required version:
+#Load the modules R, gcc and netcdf with the required version:
 [name@server ~]$ module load gcc/5.4.0  r/3.5.2  netcdf/4.4.1.1
-install R packages with these commands: 
+#install R packages with these commands: 
 [name@server ~]$ mkdir -p $HOME/R_libs
 [name@server ~]$ export R_LIBS=$HOME/R_libs
 [name@server ~]$ R -e 'install.packages("ncdf4", repos="https://cloud.r-project.org/")'
 [name@server ~]$ R -e 'install.packages("ClimDown", repos="https://cloud.r-project.org/")'
+#create Rscript and bash script for job submission:
+[name@server ~]$ nano run-CanESM5_job.sh
+[name@server ~]$ nano R_climdown_CanESM5.R
+#place your code in these two files. (the job and R scripts are available on this GitHub page)
 
-Then install ClimDown and ncdf4 packages on R in the directory to make sure they are installed!
+#Then, install ClimDown and ncdf4 packages on R in the directory to make sure they are installed!
 
 #### To edit Rprofile in R:
-Changed the calibration.start and calibration.end . Copied the content of the config file in Rprofile in R environment on Graham using the following command:
+#Changed the calibration.start and calibration.end . Copied the content of the config file in Rprofile in R environment on Graham using the following command:
 file.edit(".Rprofile")         # edit project specific .Rprofile
 
-To edit R profile in Home:
+#To edit R profile in Home:
 file.edit(file.path("~", ".Rprofile")) # edit .Rprofile in HOME
 
 #### congig.R:
@@ -177,7 +170,3 @@ chunk.month.factor <- function(t, chunk.size) {
     levels(f) <- gsub('.*\\.(.*)', '\\1', c(levels(f)[1], new.levels))
     f
 }
-
-
-
-
