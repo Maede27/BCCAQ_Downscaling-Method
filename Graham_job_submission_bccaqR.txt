@@ -79,6 +79,10 @@ module load cdo/1.7.2  r/3.5.0
 [name@server ~]$ export R_LIBS=$HOME/R_libs
 [name@server ~]$ R -e 'install.packages("ncdf4", repos="https://cloud.r-project.org/")'
 [name@server ~]$ R -e 'install.packages("ClimDown", repos="https://cloud.r-project.org/")'
+#create Rscript and bash script for job submission:
+[name@server ~]$ nano run-CanESM5_job.sh
+[name@server ~]$ nano R_climdown_CanESM5.R
+#place your code in these two files. (the job and R scripts are available on this GitHub page)
 
 #Then, install ClimDown and ncdf4 packages on R in the directory to make sure they are installed!
 
