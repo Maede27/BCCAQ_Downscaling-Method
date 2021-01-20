@@ -173,3 +173,10 @@ chunk.month.factor <- function(t, chunk.size) {
     levels(f) <- gsub('.*\\.(.*)', '\\1', c(levels(f)[1], new.levels))
     f
 }
+
+
+#### to give access to a folder:
+[name@server ~]$ chmod -R 777 .  (with '.' at the end)
+
+
+
