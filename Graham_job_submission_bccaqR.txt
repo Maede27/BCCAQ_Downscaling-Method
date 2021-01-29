@@ -86,8 +86,7 @@ module load cdo/1.7.2  r/3.5.0
 
 #Then, install ClimDown and ncdf4 packages on R in the directory to make sure they are installed!
 # And finally, submit the job:
-[name@server ~]$ sbatch run-CanESM5_job.sh
-
+[name@server ~]$ sbatch run-CanESM5_job.sh  
 
 
 #### To edit Rprofile in R:
@@ -176,5 +175,5 @@ chunk.month.factor <- function(t, chunk.size) {
 }
 
 
-
-
+#### to give access to a folder:
+[name@server ~]$ chmod -R 777 .  (with '.' at the end)
