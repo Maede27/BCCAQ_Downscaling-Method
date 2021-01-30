@@ -1,6 +1,6 @@
 # Compute-Canada-Graham-commands
 
-Install PuTTY to connect to the Compute Canada (Graham Server)
+Install PuTTY to connect to the Compute Canada (Graham Server) (or download **MobaXterm** from here :https://mobaxterm.mobatek.net/download.html it is menu design terminal for Windows and very user-friendly)
 Copy graham.computecanada.ca to Host Name or IP address in PuTTY, then select SSH and open 
 After connecting to CC server, navigate to home/mehdisam
 To install the R packages, you need to load "netcdf" module in addition to gcc and R:
