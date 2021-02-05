@@ -88,6 +88,9 @@ module load cdo/1.7.2  r/3.5.0
 # And finally, submit the job:
 [name@server ~]$ sbatch run-CanESM5_job.sh  
 
+check the actual cpu/memory usage of a completed job using command "seff <jobID>"
+$ squeue -u <username> -t RUNNING
+$ squeue -u <username> -t PENDING
 
 #### To edit Rprofile in R:
 #Changed the calibration.start and calibration.end . Copied the content of the config file in Rprofile in R environment on Graham using the following command:
