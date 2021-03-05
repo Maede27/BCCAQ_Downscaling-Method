@@ -1,0 +1,42 @@
+#!/bin/bash
+## To Run
+## ./wrapper_pbs_climdown_grex.sh /global/scratch/najafim/downscaling/input/LE/CanESM2/ /global/scratch/najafim/downscaling/input/obs/pr+tasmax+tasmin+wind.Tps.CWNA-VIC-biasc.1945-2012.allwsbc.nc pr
+
+if [ -z "$1" ]; then echo "Use: script.sh <full path directory of gcms> <full path location of obs file> <variable: pr|tasmin|tasmax>"; exit; fi
+# Find all the files with "pr" in the name that end in ".nc"
+for i in $(find $1 -name "$3*.nc")
+do
+
+    #Get the filename from the array created above, to use in the output filename
+    j=($(echo $i | awk -F / '{print $NF}'))
+    k=($(echo $2 | awk -F / '{print $NF}'))
+
+    cat <<EOF | qsub -N $j
+#PBS -S /bin/bash
+#PBS -l nodes=1:ppn=2,mem=47gb,walltime=144:00:00
+#PBS -l epilogue=/home/najafim/downscaling/epilogue.script
+#PBS -M rnajafi@uvic.ca
+#PBS -m n
+#PBS -o /global/scratch/najafim/downscaling/output/\$PBS_JOBID.o.bccaq_TPS_allwsbc_$j.log
+#PBS -e /global/scratch/najafim/downscaling/output/\$PBS_JOBID.e.bccaq_TPS_allwsbc_$j.log
+
+# Copy GCM and OBS to $TMPDIR
+cp $i \$TMPDIR
+cp $2 \$TMPDIR
+
+export R_LIBS=$HOME/R_libs
+cd /home/najafim/downscaling/
+echo "Current working directory is `pwd`"
+module load r
+echo "Starting run at: `date`"
+
+# Run the script using variables as arguements, writing to $TMPDIR
+Rscript run_bccaq_multi_args_grex_2cores.R \$TMPDIR/$j \$TMPDIR/$k \$TMPDIR/\$PBS_JOBID.bccaq_TPS_allwsbc_$j $3
+echo "Program run_bccaq_multi_args_grex_2cores.R finished with exit code $? at: `date`"
+
+# Copy the file from $TMPDIR to persistent storage
+cp \$TMPDIR/\$PBS_JOBID.bccaq_TPS_allwsbc_$j /global/scratch/najafim/downscaling/output/
+
+EOF
+done
+
