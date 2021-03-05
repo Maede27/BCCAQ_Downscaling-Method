@@ -1,1 +1,1 @@
-
+BCCAQ is a hybrid downscaling method that combines outputs from Climate Analogues (CA) and quantile mapping at the fine-scale resolution. First, the CA and climate imprint (CI) plus quantile delta mapping (QDM) algorithms are run independently.
